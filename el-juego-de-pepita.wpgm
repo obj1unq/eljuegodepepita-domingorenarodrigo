@@ -1,0 +1,10 @@
+import wollok.game.*
+
+program ElJuegoDePepita {
+	game.title("El juego de Pepita")
+	game.height(12)
+	game.width(12)
+  game.boardGround("fondo.jpg")
+
+	game.start()
+}
