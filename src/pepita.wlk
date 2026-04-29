@@ -1,11 +1,21 @@
 import wollok.game.*
 import direccion.*
+import nido.*
 
 object pepita {
+	const objetivo = nido
 	var property position = null
 	
-	method image() = "pepita.png"
-
+	method image() = ("pepita-" + self.estadoImagen()) + ".png"
+	
+	method estadoImagen() = if (self.estaEnObjetivo()) "reposo" else "vuelo"
+	
+	method estaEnObjetivo() = self.estaEnLaMismaPosicionQue(objetivo)
+	
+	method estaEnLaMismaPosicionQue(
+		posicionable
+	) = position == posicionable.position()
+	
 	method inicializar() {
 		position = game.at(0, game.center().y())
 		self.inicializarMovimiento()
@@ -36,7 +46,7 @@ object pepita {
 	method validarMovimiento(direccion) {
 		if (direccion.estaEnElLimite(position)) self.error("¡Estás en el límite!")
 	}
-
+	
 	method moverHasta(direccion) {
 		position = direccion.avanzarHastaElLimite(position)
 	}

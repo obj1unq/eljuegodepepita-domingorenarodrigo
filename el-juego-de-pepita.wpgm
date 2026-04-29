@@ -1,4 +1,5 @@
 import wollok.game.*
+import src.nido.*
 import src.pepita.*
 
 program ElJuegoDePepita {
@@ -7,6 +8,7 @@ program ElJuegoDePepita {
   game.width(12)
   game.boardGround("fondo.jpg")
 
+  nido.inicializar()
   pepita.inicializar()
   game.start()
 }

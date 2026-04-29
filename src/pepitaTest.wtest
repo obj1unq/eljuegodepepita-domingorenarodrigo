@@ -1,6 +1,8 @@
 import wollok.game.*
-import src.pepita.*
-import src.direccion.*
+import pepita.*
+import direccion.*
+import nido.*
+import randomizer.*
 
 describe "Posición de Pepita" {
 	method initialize() {
@@ -75,11 +77,32 @@ describe "Movimiento de Pepita" {
 			{ self.moverDesdeElLimite(abajo) }
 		)
 	}
-
-		test "Pepita se mueve a la izquierda en el límite izquierdo y hay error" {
+	
+	test "Pepita se mueve a la izquierda en el límite izquierdo y hay error" {
 		assert.throwsExceptionWithMessage(
 			"¡Estás en el límite!",
 			{ self.moverDesdeElLimite(izquierda) }
 		)
+	}
+}
+
+describe "Representación de Pepita" {
+	method initialize() {
+		game.height(12)
+		game.width(12)
+		nido.inicializar()
+		pepita.inicializar()
+	}
+	
+	test "Pepita está fuera del nido y su imagen es la correcta" {
+		pepita.position(randomizer.emptyPosition())
+		
+		assert.equals("pepita-vuelo.png", pepita.image())
+	}
+	
+	test "Pepita está en el nido y su imagen es la correcta" {
+		pepita.position(nido.position())
+		
+		assert.equals("pepita-reposo.png", pepita.image())
 	}
 }
