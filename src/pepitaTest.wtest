@@ -3,6 +3,7 @@ import pepita.*
 import direccion.*
 import nido.*
 import randomizer.*
+import silvestre.*
 
 describe "Posición de Pepita" {
 	method initialize() {
@@ -91,7 +92,12 @@ describe "Representación de Pepita" {
 		game.height(12)
 		game.width(12)
 		nido.inicializar()
+		silvestre.inicializar()
 		pepita.inicializar()
+	}
+	
+	method moverALaPosicionDeSilvestre() {
+		pepita.position(game.at(silvestre.limiteX(), silvestre.limiteY()))
 	}
 	
 	test "Pepita está fuera del nido y su imagen es la correcta" {
@@ -104,5 +110,11 @@ describe "Representación de Pepita" {
 		pepita.position(nido.position())
 		
 		assert.equals("pepita-reposo.png", pepita.image())
+	}
+	
+	test "Pepita está atrapada por Silvestre y su imagen es la correcta" {
+		self.moverALaPosicionDeSilvestre()
+		
+		assert.equals("pepita-cautiverio.png", pepita.image())
 	}
 }

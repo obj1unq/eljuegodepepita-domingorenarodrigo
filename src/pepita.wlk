@@ -1,16 +1,30 @@
 import wollok.game.*
 import direccion.*
 import nido.*
+import silvestre.*
 
 object pepita {
 	const objetivo = nido
+	const depredador = silvestre
 	var property position = null
 	
 	method image() = ("pepita-" + self.estadoImagen()) + ".png"
 	
-	method estadoImagen() = if (self.estaEnObjetivo()) "reposo" else "vuelo"
+	method estadoImagen() {
+		if (self.estaEnObjetivo()) {
+			return "reposo"
+		}
+		
+		if (self.estaAtrapada()) {
+			return "cautiverio"
+		}
+		
+		return "vuelo"
+	}
 	
 	method estaEnObjetivo() = self.estaEnLaMismaPosicionQue(objetivo)
+	
+	method estaAtrapada() = self.estaEnLaMismaPosicionQue(depredador)
 	
 	method estaEnLaMismaPosicionQue(
 		posicionable
