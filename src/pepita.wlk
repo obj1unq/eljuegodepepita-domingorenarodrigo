@@ -6,7 +6,14 @@ import silvestre.*
 object pepita {
 	const objetivo = nido
 	const depredador = silvestre
+	var energia = 100
 	var property position = null
+
+	method energia() = energia
+
+	method text() = "\n\n\n" + energia
+
+	method textColor() = "1020ff" 
 	
 	method image() = ("pepita-" + self.estadoImagen()) + ".png"
 	

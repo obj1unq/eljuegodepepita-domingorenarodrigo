@@ -118,3 +118,15 @@ describe "Representación de Pepita" {
 		assert.equals("pepita-cautiverio.png", pepita.image())
 	}
 }
+
+describe "Energia de Pepita" {
+	method initialize() {
+		game.height(12)
+		game.width(12)
+		pepita.inicializar()
+	}
+
+	test "Energía inicial de Pepita" {
+		assert.equals(100, pepita.energia())
+	}
+}
