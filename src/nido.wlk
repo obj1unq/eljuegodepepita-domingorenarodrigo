@@ -8,7 +8,7 @@ object nido {
   method image() = "nido.png"
   
   method inicializar() {
-    position = game.center().right(3).up(3)
+    position = game.center().right(1).up(2)
     game.addVisual(self)
   }
 }
