@@ -29,12 +29,22 @@ describe "Movimiento de Pepita" {
 		pepita.mover(direccion)
 	}
 	
+	method volarDesdeElCentro(direccion) {
+		pepita.position(game.center())
+		pepita.volar(direccion)
+	}
+	
 	method moverDesdeElLimite(direccion) {
 		pepita.moverHasta(direccion)
 		pepita.mover(direccion)
 	}
 	
-	test "Pepita se mueve a arriba" {
+	method volarDesdeElLimite(direccion) {
+		pepita.moverHasta(direccion)
+		pepita.volar(direccion)
+	}
+	
+	test "Pepita se mueve arriba" {
 		self.moverDesdeElCentro(arriba)
 		
 		assert.equals(game.center().up(1), pepita.position())
@@ -52,13 +62,37 @@ describe "Movimiento de Pepita" {
 		assert.equals(game.center().left(1), pepita.position())
 	}
 	
-	test "Pepita se mueve a abajo" {
+	test "Pepita se mueve abajo" {
 		self.moverDesdeElCentro(abajo)
 		
 		assert.equals(game.center().down(1), pepita.position())
 	}
 	
-	test "Pepita se mueve a arriba en el límite superior y hay error" {
+	test "Pepita vuela arriba" {
+		self.volarDesdeElCentro(arriba)
+		
+		assert.equals(game.center().up(1), pepita.position())
+	}
+	
+	test "Pepita vuela a la derecha" {
+		self.volarDesdeElCentro(derecha)
+		
+		assert.equals(game.center().right(1), pepita.position())
+	}
+	
+	test "Pepita vuela a la izquierda" {
+		self.volarDesdeElCentro(izquierda)
+		
+		assert.equals(game.center().left(1), pepita.position())
+	}
+	
+	test "Pepita vuela abajo" {
+		self.volarDesdeElCentro(abajo)
+		
+		assert.equals(game.center().down(1), pepita.position())
+	}
+	
+	test "Pepita se mueve arriba en el límite superior y hay error" {
 		assert.throwsExceptionWithMessage(
 			"¡Estás en el límite!",
 			{ self.moverDesdeElLimite(arriba) }
@@ -72,7 +106,7 @@ describe "Movimiento de Pepita" {
 		)
 	}
 	
-	test "Pepita se mueve a abajo en el límite inferior y hay error" {
+	test "Pepita se mueve abajo en el límite inferior y hay error" {
 		assert.throwsExceptionWithMessage(
 			"¡Estás en el límite!",
 			{ self.moverDesdeElLimite(abajo) }
@@ -84,6 +118,111 @@ describe "Movimiento de Pepita" {
 			"¡Estás en el límite!",
 			{ self.moverDesdeElLimite(izquierda) }
 		)
+	}
+	
+	test "Pepita vuela arriba en el límite superior y hay error" {
+		assert.throwsExceptionWithMessage(
+			"¡Estás en el límite!",
+			{ self.volarDesdeElLimite(arriba) }
+		)
+	}
+	
+	test "Pepita vuela a la derecha en el límite derecho y hay error" {
+		assert.throwsExceptionWithMessage(
+			"¡Estás en el límite!",
+			{ self.volarDesdeElLimite(derecha) }
+		)
+	}
+	
+	test "Pepita vuela abajo en el límite inferior y hay error" {
+		assert.throwsExceptionWithMessage(
+			"¡Estás en el límite!",
+			{ self.volarDesdeElLimite(abajo) }
+		)
+	}
+	
+	test "Pepita vuela a la izquierda en el límite izquierdo y hay error" {
+		assert.throwsExceptionWithMessage(
+			"¡Estás en el límite!",
+			{ self.volarDesdeElLimite(izquierda) }
+		)
+	}
+	
+	test "Pepita vuela arriba sin energía y hay error" {
+		pepita.disminuirEnergia(100)
+		
+		assert.throwsExceptionWithMessage(
+			"¡Energía insuficiente!",
+			{ self.volarDesdeElCentro(arriba) }
+		)
+	}
+	
+	test "Pepita vuela a la derecha sin energía y hay error" {
+		pepita.disminuirEnergia(100)
+		
+		assert.throwsExceptionWithMessage(
+			"¡Energía insuficiente!",
+			{ self.volarDesdeElCentro(derecha) }
+		)
+	}
+	
+	test "Pepita vuela abajo sin energía y hay error" {
+		pepita.disminuirEnergia(100)
+		
+		assert.throwsExceptionWithMessage(
+			"¡Energía insuficiente!",
+			{ self.volarDesdeElCentro(abajo) }
+		)
+	}
+	
+	test "Pepita vuela a la izquierda sin energía y hay error" {
+		pepita.disminuirEnergia(100)
+		
+		assert.throwsExceptionWithMessage(
+			"¡Energía insuficiente!",
+			{ self.volarDesdeElCentro(izquierda) }
+		)
+	}
+}
+
+describe "Energia de Pepita" {
+	method initialize() {
+		game.height(12)
+		game.width(12)
+		pepita.inicializar()
+	}
+	
+	method volarDesdeElCentro(direccion) {
+		pepita.position(game.center())
+		pepita.volar(direccion)
+	}
+	
+	test "Energía inicial de Pepita" {
+		assert.equals(100, pepita.energia())
+	}
+	
+	test "Pepita vuela arriba y su energía disminuye correctamente" {
+		self.volarDesdeElCentro(arriba)
+		
+		assert.equals(91, pepita.energia())
+	}
+	
+	test "Pepita vuela a la derecha y su energía disminuye correctamente" {
+		self.volarDesdeElCentro(derecha)
+		
+		assert.equals(91, pepita.energia())
+	}
+	
+	test "Pepita vuela abajo y su energía disminuye correctamente" {
+		self.volarDesdeElCentro(abajo)
+		
+		assert.equals(91, pepita.energia())
+	}
+	
+	test "Pepita vuela a la izquierda y su energía disminuye correctamente" {
+		self.volarDesdeElCentro(izquierda)
+		
+		assert.equals(91, pepita.energia())
 	}
 }
 
@@ -100,33 +239,42 @@ describe "Representación de Pepita" {
 		pepita.position(game.at(silvestre.limiteX(), silvestre.limiteY()))
 	}
 	
-	test "Pepita está fuera del nido y su imagen es la correcta" {
+	test "Pepita está con energía fuera del nido y su imagen es la correcta" {
 		pepita.position(randomizer.emptyPosition())
 		
 		assert.equals("pepita-vuelo.png", pepita.image())
 	}
 	
-	test "Pepita está en el nido y su imagen es la correcta" {
+	test "Pepita está sin energía fuera del nido y su imagen es la correcta" {
+		pepita.position(randomizer.emptyPosition())
+		pepita.disminuirEnergia(100)
+		
+		assert.equals("pepita-gris.png", pepita.image())
+	}
+	
+	test "Pepita está con energía en el nido y su imagen es la correcta" {
 		pepita.position(nido.position())
 		
 		assert.equals("pepita-reposo.png", pepita.image())
 	}
 	
-	test "Pepita está atrapada por Silvestre y su imagen es la correcta" {
+	test "Pepita está sin energía en el nido y su imagen es la correcta" {
+		pepita.position(nido.position())
+		pepita.disminuirEnergia(100)
+		
+		assert.equals("pepita-reposo.png", pepita.image())
+	}
+	
+	test "Pepita está con energía atrapada por Silvestre y su imagen es la correcta" {
 		self.moverALaPosicionDeSilvestre()
 		
-		assert.equals("pepita-cautiverio.png", pepita.image())
+		assert.equals("pepita-gris.png", pepita.image())
 	}
-}
-
-describe "Energia de Pepita" {
-	method initialize() {
-		game.height(12)
-		game.width(12)
-		pepita.inicializar()
-	}
-
-	test "Energía inicial de Pepita" {
-		assert.equals(100, pepita.energia())
+	
+	test "Pepita está sin energía atrapada por Silvestre y su imagen es la correcta" {
+		self.moverALaPosicionDeSilvestre()
+		pepita.disminuirEnergia(100)
+		
+		assert.equals("pepita-gris.png", pepita.image())
 	}
 }

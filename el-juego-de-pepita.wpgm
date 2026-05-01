@@ -8,7 +8,7 @@ program ElJuegoDePepita {
   game.height(12)
   game.width(12)
   game.boardGround("fondo.jpg")
-
+  
   nido.inicializar()
   silvestre.inicializar()
   pepita.inicializar()
