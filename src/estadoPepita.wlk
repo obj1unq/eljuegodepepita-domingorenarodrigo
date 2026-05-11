@@ -17,7 +17,7 @@ object conEnergia {
   
   method volar(pepita, direccion) {
     pepita.mover(direccion)
-    pepita.disminuirEnergia(pepita.joulesPorKm())
+    pepita.disminuirEnergiaYActualizarEstado(pepita.joulesPorKm())
   }
 }
 

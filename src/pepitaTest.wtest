@@ -149,7 +149,7 @@ describe "Movimiento de Pepita" {
 	}
 	
 	test "Pepita vuela arriba sin energía y hay error" {
-		pepita.disminuirEnergia(100)
+		pepita.disminuirEnergiaYActualizarEstado(100)
 		
 		assert.throwsExceptionWithMessage(
 			"¡Energía insuficiente!",
@@ -158,7 +158,7 @@ describe "Movimiento de Pepita" {
 	}
 	
 	test "Pepita vuela a la derecha sin energía y hay error" {
-		pepita.disminuirEnergia(100)
+		pepita.disminuirEnergiaYActualizarEstado(100)
 		
 		assert.throwsExceptionWithMessage(
 			"¡Energía insuficiente!",
@@ -167,7 +167,7 @@ describe "Movimiento de Pepita" {
 	}
 	
 	test "Pepita vuela abajo sin energía y hay error" {
-		pepita.disminuirEnergia(100)
+		pepita.disminuirEnergiaYActualizarEstado(100)
 		
 		assert.throwsExceptionWithMessage(
 			"¡Energía insuficiente!",
@@ -176,7 +176,7 @@ describe "Movimiento de Pepita" {
 	}
 	
 	test "Pepita vuela a la izquierda sin energía y hay error" {
-		pepita.disminuirEnergia(100)
+		pepita.disminuirEnergiaYActualizarEstado(100)
 		
 		assert.throwsExceptionWithMessage(
 			"¡Energía insuficiente!",
@@ -247,7 +247,7 @@ describe "Representación de Pepita" {
 	
 	test "Pepita está sin energía fuera del nido y su imagen es la correcta" {
 		pepita.position(randomizer.emptyPosition())
-		pepita.disminuirEnergia(100)
+		pepita.disminuirEnergiaYActualizarEstado(100)
 		
 		assert.equals("pepita-gris.png", pepita.image())
 	}
@@ -260,7 +260,7 @@ describe "Representación de Pepita" {
 	
 	test "Pepita está sin energía en el nido y su imagen es la correcta" {
 		pepita.position(nido.position())
-		pepita.disminuirEnergia(100)
+		pepita.disminuirEnergiaYActualizarEstado(100)
 		
 		assert.equals("pepita-reposo.png", pepita.image())
 	}
@@ -273,7 +273,7 @@ describe "Representación de Pepita" {
 	
 	test "Pepita está sin energía atrapada por Silvestre y su imagen es la correcta" {
 		self.moverALaPosicionDeSilvestre()
-		pepita.disminuirEnergia(100)
+		pepita.disminuirEnergiaYActualizarEstado(100)
 		
 		assert.equals("pepita-gris.png", pepita.image())
 	}

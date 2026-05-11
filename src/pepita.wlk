@@ -7,27 +7,45 @@ import estadoPepita.*
 object pepita {
   const objetivo = nido
   const depredador = silvestre
+  var estado = conEnergia
   var energia = 100
   var property position = null
 
-  method image() = ("pepita-" + self.estado().image(self)) + ".png"
+  method image() = ("pepita-" + estado.image(self)) + ".png"
 
   method text() = "\n\n\n" + energia
 
-  method textColor() = self.estado().textColor()
+  method textColor() = estado.textColor()
 
-  method estado() = if (self.tieneEnergia()) conEnergia else sinEnergia
-
+  method actualizarEstado() { 
+    if (self.tieneEnergia()) {
+      estado = conEnergia 
+    } 
+    else {
+      estado = sinEnergia
+    }
+  }
   method tieneEnergia() = energia >= self.joulesPorKm() 
-
+//
   method energia() = energia
-
+//
   method joulesPorKm() = 9
+
+  method disminuirEnergiaYActualizarEstado(cantidad) {
+    self.disminuirEnergia(cantidad)
+    self.actualizarEstado()
+  }
+
+  method aumentarEnergiaYActualizarEstado(cantidad) {
+    self.aumentarEnergia(cantidad)
+    self.actualizarEstado()
+  }
 
   method disminuirEnergia(cantidad) {
     if (cantidad < 0) self.error("No se puede disminuir una cantidad negativa de energía")
     
     energia = 0.max(energia - cantidad)
+
   }
 
   method aumentarEnergia(cantidad) {
@@ -58,7 +76,7 @@ object pepita {
   }
 
   method volar(direccion) {
-    self.estado().volar(self, direccion)
+    estado.volar(self, direccion)
   }
 
   method mover(direccion) {
