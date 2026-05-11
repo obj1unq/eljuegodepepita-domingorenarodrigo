@@ -1,0 +1,79 @@
+import wollok.game.*
+import silvestre.*
+import pepita.*
+
+describe "Movimiento de Silvestre" {
+  method initialize() {
+    game.height(12)
+    game.width(12)
+    silvestre.inicializar()
+    pepita.inicializar()
+  }
+  
+  method estaEnLaMismaPosicionXDePepita() = silvestre.position().x() == pepita.position().x()
+  
+  method estaEnElSuelo() = silvestre.position().y() == 0
+  
+  method estaALaIzquierdaDelLimiteX() = silvestre.position().x() < silvestre.limiteX()
+  
+  method moverAPepitaALaPosicionX(posicionX) {
+    pepita.position(game.at(posicionX, pepita.position().y()))
+  }
+  
+  test "Silvestre persigue a Pepita desde el suelo" {
+    self.moverAPepitaALaPosicionX(silvestre.limiteX())
+    
+    const condicion1 =
+     self.estaEnLaMismaPosicionXDePepita() && self.estaEnElSuelo()
+    
+    self.moverAPepitaALaPosicionX(silvestre.limiteX() + 2)
+    
+    const condicion2 =
+     self.estaEnLaMismaPosicionXDePepita() && self.estaEnElSuelo()
+    
+    self.moverAPepitaALaPosicionX(silvestre.limiteX() + 4)
+    
+    const condicion3 =
+     self.estaEnLaMismaPosicionXDePepita() && self.estaEnElSuelo()
+    
+    self.moverAPepitaALaPosicionX(silvestre.limiteX() + 6)
+    
+    const condicion4 =
+     self.estaEnLaMismaPosicionXDePepita() && self.estaEnElSuelo()
+    
+    self.moverAPepitaALaPosicionX(silvestre.limiteX() + 8)
+    
+    const condicion5 =
+     self.estaEnLaMismaPosicionXDePepita() && self.estaEnElSuelo()
+    
+    assert.that(
+      (((condicion1 && condicion2) && condicion3) && condicion4) && condicion5
+    )
+  }
+  
+  test "Silvestre nunca está a la izquierda de su límite en el eje X" {
+    self.moverAPepitaALaPosicionX(silvestre.limiteX() + 1)
+    
+    const condicion1 = not self.estaALaIzquierdaDelLimiteX()
+    
+    self.moverAPepitaALaPosicionX(silvestre.limiteX())
+    
+    const condicion2 = not self.estaALaIzquierdaDelLimiteX()
+    
+    self.moverAPepitaALaPosicionX(silvestre.limiteX() - 1)
+    
+    const condicion3 = not self.estaALaIzquierdaDelLimiteX()
+    
+    self.moverAPepitaALaPosicionX(silvestre.limiteX() - 2)
+    
+    const condicion4 = not self.estaALaIzquierdaDelLimiteX()
+    
+    self.moverAPepitaALaPosicionX(silvestre.limiteX() - 3)
+    
+    const condicion5 = not self.estaALaIzquierdaDelLimiteX()
+    
+    assert.that(
+      (((condicion1 && condicion2) && condicion3) && condicion4) && condicion5
+    )
+  }
+}
